@@ -18,6 +18,8 @@ from time import strftime
 #dev = "eth0"
 dev = "wlp3s0"
 dump_file = strftime("%Y-%m-%d-%H.pcap")
+
+packet_limit = 10000
 input_file = None
 max_bytes = 1024
 promiscuous = False
@@ -34,16 +36,16 @@ def write_packet(hdr, data):
 def read_packet(hdr, data):
 	ether = decoder.decode(data)
 	if ether.get_ether_type() == IP.ethertype:
-	  file = open("out.txt","a+")
-  	iphdr = ether.child()
-  	#tcphdr = iphdr.child()
-  	DES = iphdr.get_ip_dst()
-  	SRC = iphdr.get_ip_src()
-  	#DESP = str(tcphdr.get_th_dport())
-  	#SRCP = str(tcphdr.get_th_sport())
-  	print ("%s\n%s" % (DES, SRC))
-  	file.write("\nEND\n")
-  	file.close()
+  		iphdr = ether.child()
+  		#tcphdr = iphdr.child()
+  		DES = iphdr.get_ip_dst()
+  		SRC = iphdr.get_ip_src()
+  		#DESP = str(tcphdr.get_th_dport())
+  		#SRCP = str(tcphdr.get_th_sport())
+		file = open("out.txt","a+")
+  		print ("%s\n%s" % (DES, SRC))
+  		file.write("\nEND\n")
+  		file.close()
 
 def check ():
 	if(os.getuid() or os.geteuid()):
@@ -88,11 +90,12 @@ for opt in opts:
 if input_file == None:
 	check()
 	pcap = pcapy.open_live(dev, max_bytes, promiscuous, read_timeout)
+	#pcap.setfilter('tcp')
 	dumper = pcap.dump_open(dump_file)
 	pcap.loop(0, write_packet)
 else:
 	pcap = pcapy.open_offline(input_file)
-	pcap.loop(0, read_packet)
+	pcap.loop(packet_limit, read_packet)
   
 ##############################
 ############ END #############
