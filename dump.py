@@ -30,7 +30,7 @@ read_timeout = 0
 ###############################
 
 def write_packet(hdr, data):
-	print decoder.decode(data)
+	#print decoder.decode(data)
 	dumper.dump(hdr, data)
 
 def read_packet(hdr, data):
