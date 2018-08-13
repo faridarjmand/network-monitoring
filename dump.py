@@ -92,7 +92,7 @@ if input_file == None:
 	pcap = pcapy.open_live(dev, max_bytes, promiscuous, read_timeout)
 	#pcap.setfilter('tcp')
 	dumper = pcap.dump_open(dump_file)
-	pcap.loop(0, write_packet)
+	pcap.loop(packet_limit, write_packet)
 else:
 	pcap = pcapy.open_offline(input_file)
 	pcap.loop(packet_limit, read_packet)
