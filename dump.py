@@ -18,9 +18,10 @@ from time import strftime
 #dev = "eth0"
 dev = "wlp3s0"
 dump_file = strftime("%Y-%m-%d-%H.pcap")
+input_file = None
+tmp_file = "tmp.pcap"
 
 packet_limit = 10000
-input_file = None
 max_bytes = 1024
 promiscuous = False
 read_timeout = 0
@@ -43,9 +44,9 @@ def read_packet(hdr, data):
   		#DESP = str(tcphdr.get_th_dport())
   		#SRCP = str(tcphdr.get_th_sport())
 		file = open("out.txt","a+")
-  		print ("%s\n%s" % (DES, SRC))
-  		file.write("\nEND\n")
-  		file.close()
+		file.write(DES); file.write("\n")
+                file.write(SRC); file.write("\n")
+		file.close()
 
 def check():
 	if(os.getuid() or os.geteuid()):
@@ -108,6 +109,7 @@ if input_file == None:
 else:
 	pcap = pcapy.open_offline(input_file)
 	pcap.loop(packet_limit, read_packet)
+	print (list(set([line.strip() for line in open(tmp_file, 'r')])))
   
 ##############################
 ############ END #############
