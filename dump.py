@@ -47,7 +47,7 @@ def read_packet(hdr, data):
   		file.write("\nEND\n")
   		file.close()
 
-def check ():
+def check():
 	if(os.getuid() or os.geteuid()):
 		print ("Requires root access")
 		exit (1)
@@ -58,6 +58,18 @@ def check ():
 	if pr.datalink() != pcapy.DLT_EN10MB:
 		print ("Interface not Ethernet " + dev)
 
+def compress():
+	global GZ
+	GZ = []
+	GZ.append(str(dump_file))
+	GZ.append('.gz')
+	GZ = ''.join(GZ)
+	infile = open(dump_file, 'rb')
+	outfile = gzip.open(GZ, 'wb')
+	outfile.writelines(infile)
+	outfile.close()
+	infile.close()
+	
 def usage():
 	print sys.argv[0] + """
 	-i <dev>
