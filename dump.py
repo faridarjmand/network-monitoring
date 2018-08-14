@@ -7,6 +7,7 @@ import pcapy
 import sys
 import os
 import getopt
+import ConfigParser
 from impacket.ImpactDecoder import EthDecoder
 from impacket.ImpactPacket import IP
 from time import strftime
@@ -15,16 +16,16 @@ from time import strftime
 ########## Variable ##########
 ##############################
 
-#dev = "eth0"
-dev = "wlp3s0"
-dump_file = strftime("%Y-%m-%d-%H.pcap")
-input_file = None
-tmp_file = "tmp.pcap"
-
-packet_limit = 10000
-max_bytes = 1024
-promiscuous = False
-read_timeout = 0
+config = ConfigParser.ConfigParser()
+config.read("dump.cfg")
+dev = config.get("Variable", "dev")
+dump_file = config.get("Variable", "dump_file")
+input_file = config.get("Variable", "input_file")
+tmp_file = config.get("Variable", "tmp_file")
+packet_limit = config.get("Variable", "packet_limit")
+max_bytes = config.get("Variable", "max_bytes")
+promiscuous = config.get("Variable", "promiscuous")
+read_timeout = config.get("Variable", "read_timeout")
 
 ###############################
 ########## Functions ##########
