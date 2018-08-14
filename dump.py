@@ -110,7 +110,10 @@ if input_file == None:
 else:
 	pcap = pcapy.open_offline(input_file)
 	pcap.loop(packet_limit, read_packet)
-	print (list(set([line.strip() for line in open(tmp_file, 'r')])))
+	all_list = list(set([line.strip() for line in open(tmp_file, 'r')]))
+	for ip in all_list:
+		if ip not in white_list:
+			print ip
   
 ##############################
 ############ END #############
