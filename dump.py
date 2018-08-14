@@ -44,7 +44,7 @@ def read_packet(hdr, data):
   		SRC = iphdr.get_ip_src()
   		#DESP = str(tcphdr.get_th_dport())
   		#SRCP = str(tcphdr.get_th_sport())
-		file = open("out.txt","a+")
+		file = open(tmp_file,"a+")
 		file.write(DES); file.write("\n")
                 file.write(SRC); file.write("\n")
 		file.close()
