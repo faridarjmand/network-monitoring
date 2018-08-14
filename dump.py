@@ -26,6 +26,7 @@ packet_limit = config.get("Variable", "packet_limit")
 max_bytes = config.get("Variable", "max_bytes")
 promiscuous = config.get("Variable", "promiscuous")
 read_timeout = config.get("Variable", "read_timeout")
+white_list = list(set([line.strip() for line in open(white_file, 'r')]))
 
 ###############################
 ########## Functions ##########
