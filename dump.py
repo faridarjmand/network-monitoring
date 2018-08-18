@@ -3,14 +3,14 @@
 
 ## Created By.Farid Arjmand ##
 
-import pcapy
-import sys
 import os
+import sys
+import pcapy
 import getopt
 import ConfigParser
-from impacket.ImpactDecoder import EthDecoder
-from impacket.ImpactPacket import IP
 from time import strftime
+from impacket.ImpactPacket import IP
+from impacket.ImpactDecoder import EthDecoder
 
 ##############################
 ########## Variable ##########
