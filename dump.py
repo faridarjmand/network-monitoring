@@ -103,7 +103,7 @@ for opt in opts:
 	else:
 		usage()
 
-if input_file == None:
+if input_file == "None":
 	check()
 	pcap = pcapy.open_live(dev, max_bytes, promiscuous, read_timeout)
 	#pcap.setfilter('tcp')
