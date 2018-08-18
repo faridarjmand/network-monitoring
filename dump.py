@@ -22,6 +22,7 @@ dev = config.get("Variable", "dev")
 dump_file = config.get("Variable", "dump_file")
 input_file = config.get("Variable", "input_file")
 white_file = config.get("Variable", "white_file")
+black_file = config.get("Variable", "black_file")
 tmp_file = config.get("Variable", "tmp_file")
 packet_limit = config.getint("Variable", "packet_limit")
 max_bytes = config.getint("Variable", "max_bytes")
@@ -116,9 +117,12 @@ else:
 	pcap = pcapy.open_offline(input_file)
 	pcap.loop(packet_limit, read_packet)
 	all_list = list(set([line.strip() for line in open(tmp_file, 'r')]))
+	file = open(black_file,"a+")
 	for ip in all_list:
 		if ip not in white_list:
 			print ip
+			file.write(ip); file.write("\n")
+	file.close()
   
 ##############################
 ############ END #############
