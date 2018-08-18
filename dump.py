@@ -120,7 +120,7 @@ else:
 	file = open(black_file,"a+")
 	for ip in all_list:
 		if ip not in white_list:
-			print ip
+			print ("%s is not in %s" % (ip, white_file))
 			file.write(ip); file.write("\n")
 	file.close()
   
