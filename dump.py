@@ -103,6 +103,9 @@ for opt in opts:
 	else:
 		usage()
 
+if dump_file == "None":
+	dump_file = strftime("%Y-%m-%d-%H.pcap")
+
 if input_file == "None":
 	check()
 	pcap = pcapy.open_live(dev, max_bytes, promiscuous, read_timeout)
