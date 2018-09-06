@@ -42,8 +42,8 @@ def read_packet(hdr, data):
   		DES = iphdr.get_ip_dst()
   		SRC = iphdr.get_ip_src()
 		file = open(tmp_file,"a+")
-		file.write(DES); file.write("\n")
-                file.write(SRC); file.write("\n")
+		file.write(DES, "\n")
+                file.write(SRC, "\n")
 		file.close()
 
 def check():
@@ -75,5 +75,5 @@ file = open(black_file,"a+")
 for ip in all_list:
   if ip not in white_list:
     print ("%s is not in %s" % (ip, white_file))
-		file.write(ip); file.write("\n")
+    file.write(ip); file.write("\n")
 file.close()
