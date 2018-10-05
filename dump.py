@@ -3,11 +3,7 @@
 
 ## Created By.Farid Arjmand ##
 
-import os
-import sys
-import pcapy
-import getopt
-import ConfigParser
+import os, sys, pcapy, getopt, ConfigParser
 from time import strftime
 from impacket.ImpactPacket import IP
 from impacket.ImpactDecoder import EthDecoder
@@ -47,7 +43,7 @@ def read_packet(hdr, data):
   		SRC = iphdr.get_ip_src()
   		#DESP = str(tcphdr.get_th_dport())
   		#SRCP = str(tcphdr.get_th_sport())
-		file = open(tmp_file,"a+")
+		file = open(tmp_file, 'a+')
 		file.write(DES); file.write("\n")
                 file.write(SRC); file.write("\n")
 		file.close()
@@ -69,12 +65,9 @@ def compress():
 	GZ.append(str(dump_file))
 	GZ.append('.gz')
 	GZ = ''.join(GZ)
-	infile = open(dump_file, 'rb')
-	outfile = gzip.open(GZ, 'wb')
-	outfile.writelines(infile)
-	outfile.close()
-	infile.close()
-	
+	with open(dump_file, 'rb') as infile, gzip.open(GZ, 'wb') as outfile:
+		outfile.writelines(infile)
+
 def usage():
 	print sys.argv[0] + """
 	-i <dev>
@@ -104,8 +97,7 @@ for opt in opts:
 	else:
 		usage()
 
-if dump_file == "None":
-	dump_file = strftime("%Y-%m-%d-%H.pcap")
+dump_file = strftime("%Y-%m-%d-%H.pcap") if dump_file == "None"
 
 if input_file == "None":
 	check()
@@ -117,12 +109,11 @@ else:
 	pcap = pcapy.open_offline(input_file)
 	pcap.loop(packet_limit, read_packet)
 	all_list = list(set([line.strip() for line in open(tmp_file, 'r')]))
-	file = open(black_file,"a+")
-	for ip in all_list:
-		if ip not in white_list:
-			print ("%s is not in %s" % (ip, white_file))
-			file.write(ip); file.write("\n")
-	file.close()
+	with open(black_file, 'a+') as file:
+		for ip in all_list:
+			if ip not in white_list:
+				print ("%s is not in %s" % (ip, white_file))
+				file.write(ip); file.write("\n")
   
 ##############################
 ############ END #############
